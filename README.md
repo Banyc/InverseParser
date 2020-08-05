@@ -12,7 +12,7 @@ dotnet run
 
 Two kind of files to define a grammar, namely grammatical definition file with extension `gg` and lexical definition file with extension `gl`.
 
-Those files could be placed anywhere as long as the path is inside the root of the project folder. Besides, `gg` files or `gl` files could be many.
+Those files could be placed anywhere as long as the path is inside the folder `GrammarDefinitionReader.RootDirectory`. Besides, `gg` files or `gl` files could be many.
 
 ### Rule
 

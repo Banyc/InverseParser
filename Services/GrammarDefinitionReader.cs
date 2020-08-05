@@ -30,8 +30,15 @@ namespace InverseParser.Services
         /// <returns></returns>
         public Dictionary<string, List<List<string>>> LexicalDerivations { get; } = new Dictionary<string, List<List<string>>>();
 
+        public string RootDirectory { get; set; } = "./";
+
+        public void ReadGrammar()
+        {
+            ReadGrammar(this.RootDirectory);
+        }
+
         // pre-order
-        public void ReadGrammar(string rootDirectory = "./")
+        private void ReadGrammar(string rootDirectory)
         {
             DirectoryInfo currentDirectory = new DirectoryInfo(rootDirectory);
             foreach (FileInfo file in currentDirectory.GetFiles())

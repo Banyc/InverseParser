@@ -53,11 +53,11 @@ namespace InverseParser.Services
                 // `grammarRoot` is a literal
                 if (!_grammaticalDerivations.ContainsKey(grammarRoot))
                 {
-                    return grammarRoot;
+                    return FinalProcess(grammarRoot);
                 }
                 // `grammarRoot` has following terminals
                 int selectedTerminalIndex = _random.Next(_grammaticalDerivations[grammarRoot].Count);
-                return _grammaticalDerivations[grammarRoot][selectedTerminalIndex];
+                return FinalProcess(_grammaticalDerivations[grammarRoot][selectedTerminalIndex]);
             }
 
             // `grammarRoot` is a non-terminal
@@ -92,6 +92,13 @@ namespace InverseParser.Services
                 result.Append(partialText);
             }
             return result.ToString();
+        }
+
+        private string FinalProcess(string theString)
+        {
+            if (theString == "\\n")
+                return "\n";
+            return theString;
         }
     }
 }
