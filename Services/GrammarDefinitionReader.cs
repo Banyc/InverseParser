@@ -2,34 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using InverseParser.Models;
 
 namespace InverseParser.Services
 {
     public class GrammarDefinitionReader
     {
-        /// <summary>
-        /// Dictionary<
-        ///     string left-hand-side nonterminal, 
-        ///     List<
-        ///         string terminal
-        ///     > derivation
-        /// >
-        /// </summary>
-        /// <returns></returns>
-        public Dictionary<string, List<string>> GrammaticalDerivations { get; } = new Dictionary<string, List<string>>();
-        /// <summary>
-        /// Dictionary<
-        ///     string left-hand-side nonterminal, 
-        ///     List<
-        ///         List<
-        ///             string nonterminal
-        ///         > derivation
-        ///     > maxterms
-        /// >
-        /// </summary>
-        /// <returns></returns>
-        public Dictionary<string, List<List<string>>> LexicalDerivations { get; } = new Dictionary<string, List<List<string>>>();
-
+        public GrammarModel Grammar { get; } = new GrammarModel();
         public string RootDirectory { get; set; } = "./";
 
         public void ReadGrammar()
@@ -77,11 +56,11 @@ namespace InverseParser.Services
                 {
                     continue;
                 }
-                if (!this.LexicalDerivations.ContainsKey(oneLineOfNonTerminals[0]))
+                if (!this.Grammar.LexicalDerivations.ContainsKey(oneLineOfNonTerminals[0]))
                 {
-                    this.LexicalDerivations[oneLineOfNonTerminals[0]] = new List<List<string>>();
+                    this.Grammar.LexicalDerivations[oneLineOfNonTerminals[0]] = new List<List<string>>();
                 }
-                this.LexicalDerivations[oneLineOfNonTerminals[0]].Add(oneLineOfNonTerminals.GetRange(1, oneLineOfNonTerminals.Count - 1));
+                this.Grammar.LexicalDerivations[oneLineOfNonTerminals[0]].Add(oneLineOfNonTerminals.GetRange(1, oneLineOfNonTerminals.Count - 1));
             }
         }
 
@@ -104,10 +83,10 @@ namespace InverseParser.Services
                 if (currentTerminal == null)
                 {
                     currentTerminal = cleanLine;
-                    this.GrammaticalDerivations[currentTerminal] = new List<string>();
+                    this.Grammar.GrammaticalDerivations[currentTerminal] = new List<string>();
                     continue;
                 }
-                this.GrammaticalDerivations[currentTerminal].Add(cleanLine);
+                this.Grammar.GrammaticalDerivations[currentTerminal].Add(cleanLine);
             }
         }
 

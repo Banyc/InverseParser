@@ -3,40 +3,19 @@ using System.Text;
 using System.IO;
 using System.Collections.Generic;
 using System;
+using InverseParser.Models;
 
 namespace InverseParser.Services
 {
     public class TextGenerator
     {
-        /// <summary>
-        /// Dictionary<
-        ///     string left-hand-side nonterminal, 
-        ///     List<
-        ///         string terminal
-        ///     > derivation
-        /// >
-        /// </summary>
-        /// <returns></returns>
-        private readonly Dictionary<string, List<string>> _grammaticalDerivations;
-        /// <summary>
-        /// Dictionary<
-        ///     string left-hand-side nonterminal, 
-        ///     List<
-        ///         List<
-        ///             string nonterminal
-        ///         > derivation
-        ///     > maxterms
-        /// >
-        /// </summary>
-        /// <returns></returns>
-        private readonly Dictionary<string, List<List<string>>> _lexicalDerivations;
+        private readonly GrammarModel _grammar;
         private readonly Random _random = new Random();
 
         public TextGenerator(GrammarDefinitionReader reader)
         {
             reader.ReadGrammar();
-            _grammaticalDerivations = reader.GrammaticalDerivations;
-            _lexicalDerivations = reader.LexicalDerivations;
+            _grammar = reader.Grammar;
         }
 
         // post-order tree traversal
@@ -48,32 +27,32 @@ namespace InverseParser.Services
                 return null;
             }
             // `grammarRoot` is a terminal
-            if (!_lexicalDerivations.ContainsKey(grammarRoot))
+            if (!_grammar.LexicalDerivations.ContainsKey(grammarRoot))
             {
                 // `grammarRoot` is a literal
-                if (!_grammaticalDerivations.ContainsKey(grammarRoot))
+                if (!_grammar.GrammaticalDerivations.ContainsKey(grammarRoot))
                 {
                     return FinalProcess(grammarRoot);
                 }
                 // `grammarRoot` has following terminals
-                int selectedTerminalIndex = _random.Next(_grammaticalDerivations[grammarRoot].Count);
-                return FinalProcess(_grammaticalDerivations[grammarRoot][selectedTerminalIndex]);
+                int selectedTerminalIndex = _random.Next(_grammar.GrammaticalDerivations[grammarRoot].Count);
+                return FinalProcess(_grammar.GrammaticalDerivations[grammarRoot][selectedTerminalIndex]);
             }
 
             // `grammarRoot` is a non-terminal
             StringBuilder result = new StringBuilder();
 
             // select one derivation from possible derivations
-            int selectedIndex = _random.Next(_lexicalDerivations[grammarRoot].Count);
-            List<string> selectedGrammar = _lexicalDerivations[grammarRoot][selectedIndex];
+            int selectedIndex = _random.Next(_grammar.LexicalDerivations[grammarRoot].Count);
+            List<string> selectedGrammar = _grammar.LexicalDerivations[grammarRoot][selectedIndex];
 
             foreach (string nonTerminal in selectedGrammar)
             {
                 // WORK AROUND
                 int possibleBranches = 0;
-                if (_lexicalDerivations.ContainsKey(nonTerminal))
+                if (_grammar.LexicalDerivations.ContainsKey(nonTerminal))
                 {
-                    possibleBranches = _lexicalDerivations[nonTerminal].Count;
+                    possibleBranches = _grammar.LexicalDerivations[nonTerminal].Count;
                 }
                 int tryCount = 0;
                 string partialText;
