@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Reflection.PortableExecutable;
 using System.Text;
 using System.IO;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System;
 
 namespace InverseParser.Services
 {
-    public class Generator
+    public class TextGenerator
     {
         /// <summary>
         /// Dictionary<
@@ -33,7 +32,7 @@ namespace InverseParser.Services
         private readonly Dictionary<string, List<List<string>>> _lexicalDerivations;
         private readonly Random _random = new Random();
 
-        public Generator(GrammarDefinitionReader reader)
+        public TextGenerator(GrammarDefinitionReader reader)
         {
             reader.ReadGrammar();
             _grammaticalDerivations = reader.GrammaticalDerivations;

@@ -9,11 +9,11 @@ namespace InverseParser
         {
             Console.WriteLine("Hello World!");
             GrammarDefinitionReader reader = new GrammarDefinitionReader();
-            Generator generator = new Generator(reader);
+            TextGenerator generator = new TextGenerator(reader);
             while (true)
             {
                 Console.ReadLine();
-                string text = generator.GetRandomText("S", 5);
+                string text = generator.GetRandomText("S", 10);
                 Console.WriteLine(text);
             }
         }

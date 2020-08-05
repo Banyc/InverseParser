@@ -16,10 +16,12 @@ Those files could be placed anywhere as long as the path is inside the root of t
 
 ### Rule
 
-- Any text following "#" and before the nearest newline will be commented out
-- A line started with "#" will be considered as a line with no char.
+- Any text following `#` and before the nearest newline will be commented out
+- A line started with `#` will be considered as a line with no char.
 
 ### Grammatical Definition
+
+The definition is written is BNF(Backus–Naur form)-like form.
 
 #### Rule
 
@@ -34,7 +36,7 @@ Those files could be placed anywhere as long as the path is inside the root of t
 #### Example
 
 ```text
-# grammatical
+# grammatical.gg
 
 S A S
 A B C
@@ -53,7 +55,7 @@ A B
 #### Example
 
 ```text
-# lexical
+# lexical.gl
 
 B
 bbb
@@ -65,3 +67,11 @@ ccc
 ```
 
 ...It indicates that the non-terminal `B` could be derivated into terminals `bbb` or `BBB`. It is the same to `C`.
+
+### Result
+
+With the example above, the results might be:
+
+```
+BBBbbbccc
+```
