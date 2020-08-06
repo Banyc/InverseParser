@@ -96,7 +96,7 @@ namespace InverseParser.Services
             int index = str.IndexOf('#');
             if (index >= 0)
             {
-                newString = str.Take(index).ToString();
+                newString = str.Substring(0, index);
             }
             return newString;
         }
