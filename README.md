@@ -2,10 +2,27 @@
 
 Generate/compose text following a given grammar.
 
-## Build
+## How to use
+
+First, check/modify the Grammatical and Lexical Definition in folder [grammar](grammar/).
+
+Then, launch a command line shell and run the following:
+
+```shell
+dotnet run
+```
+
+After that, each time you type enter, a new example will be generated:
 
 ```
-dotnet run
+Alice and Alice love cake.
+
+Alice and Alice love banana. Bob loves banana. Bob loves cake. Bob and Bob love apple. Bob loves apple.
+
+Alice and Alice love banana. Alice loves banana.
+
+Bob and Alice love apple. Bob loves cake. Bob loves apple. Alice and Bob love cake. Alice loves apple. Bob loves apple. Alice and Bob love cake.
+
 ```
 
 ## Grammar Definition
@@ -14,10 +31,15 @@ Two kind of files to define a grammar, namely grammatical definition file with e
 
 Those files could be placed anywhere as long as the path is inside the folder `GrammarDefinitionReader.RootDirectory`. Besides, `gg` files or `gl` files could be many.
 
+`GrammarDefinitionReader.RootDirectory` is currently defined as `"./grammar"` in [Program.cs](Program.cs)
+
+A more complicated example could be found in folder [grammar](grammar/).
+
 ### Rule
 
-- Any text following `#` and before the nearest newline will be commented out
+- Any text following `#` and before the nearest `newline` (i.e. `\n`) will be commented out
 - A line started with `#` will be considered as a line with no char.
+- Any `"\n"` in lexical token will be replaced with a `newline`
 
 ### Grammatical Definition
 
